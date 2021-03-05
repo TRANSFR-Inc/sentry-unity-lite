@@ -25,8 +25,18 @@ public class SentrySdk : MonoBehaviour
     public bool AutoGenerateBreadcrumb = false;
     [Header("Enable SDK debug messages")]
     public bool Debug = true;
+    [Header("Send events in editor")]
+    public bool EnableInEditor = false;
     [Header("Override game version")]
     public string Version = "";
+    [Header("Email for the user")]
+    [Tooltip("Defaults to test@test.com")]
+    public string Email = "";
+    [Header("User's username")]
+    [Tooltip("Sentry dashboard generates a UUID if not specified")]
+    public string UserName = "";
+    [Header("User's first/last name")]
+    public string FullName = "";
 
     private string _lastErrorMessage = "";
     private Dsn _dsn;
@@ -43,7 +53,7 @@ public class SentrySdk : MonoBehaviour
             return;
         }
 
-        if (_instance == null)
+        if (_instance == null && EnableInEditor)
         {
             try
             {
@@ -332,6 +342,12 @@ public class SentrySdk : MonoBehaviour
         if (SendDefaultPii)
         {
             @event.contexts.device.name = SystemInfo.deviceName;
+            if (Email.Length > 0)
+                @event.user.email = Email;
+            if (UserName.Length > 0)
+                @event.user.username = UserName;
+            if (FullName.Length > 0)
+                @event.user.fullname = FullName;
         }
 
         @event.tags.deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;

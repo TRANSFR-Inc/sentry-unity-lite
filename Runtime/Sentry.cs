@@ -265,7 +265,7 @@ namespace Sentry
     public class SdkVersion
     {
         public string name = "sentry.unity.lite";
-        public string version = "1.0.2";
+        public string version = "1.0.3.1";
     }
 
     [Serializable]
@@ -375,6 +375,8 @@ namespace Sentry
     public class User
     {
         public string email = "test@test.com";
+        public string username = "";
+        public string fullname = "";
     }
 
     [Serializable]
