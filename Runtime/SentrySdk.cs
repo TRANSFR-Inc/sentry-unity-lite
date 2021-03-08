@@ -53,7 +53,7 @@ public class SentrySdk : MonoBehaviour
             return;
         }
 
-        if (_instance == null && EnableInEditor)
+        if (_instance == null && (!Application.isEditor || EnableInEditor))
         {
             try
             {
